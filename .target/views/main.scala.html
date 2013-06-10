@@ -1,15 +1,27 @@
-@(title: String)(content: Html)
-
-<!DOCTYPE html>
+@(olzLists: List[OlzList])(body: Html)
 
 <html>
     <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <title>OpenLoopz</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")"></script>
     </head>
     <body>
-        @content
+        <header>
+            <a href="@routes.Application.index" id="logo"><span>Open</span>Loopz</a>
+        </header>
+        <nav>
+            <h4 class="dashboard"><a href="#/">Dashboard</a></h4>
+            <ul id="projects">
+                @olzLists.groupBy(_.folder).map {
+                    case (group, olzLists) => {
+                        @views.html.lists.group(group, olzLists)
+                    }
+                }
+            </ul>
+        </nav>
+        <section id="main">
+            @body
+        </section>
     </body>
 </html>

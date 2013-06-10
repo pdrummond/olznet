@@ -11,7 +11,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import play.libs.Yaml;
 import play.test.WithApplication;
+
+import com.avaje.ebean.Ebean;
 
 public class ModelsTest extends WithApplication {
     @Before
@@ -70,4 +73,28 @@ public class ModelsTest extends WithApplication {
         assertEquals(1, results.size());
         assertEquals("Write OpenLoopz User guide", results.get(0).title);
     }
+    
+    /*@Test
+    public void fullTest() {
+        Ebean.save((List) Yaml.load("test-data.yml"));
+
+        // Count things
+        assertEquals(1, OlzUser.find.findRowCount());
+        assertEquals(7, OlzList.find.findRowCount());
+        assertEquals(5, OlzAction.find.findRowCount());
+
+        // Try to authenticate as users
+        assertNotNull(OlzUser.authenticate("bob@example.com", "secret"));
+        assertNotNull(OlzUser.authenticate("jane@example.com", "secret"));
+        assertNull(OlzUser.authenticate("jeff@example.com", "badpassword"));
+        assertNull(OlzUser.authenticate("tom@example.com", "secret"));
+
+        // Find all Bob's projects
+        List<OlzList> bobsProjects = OlzList.findInvolving("bob@example.com");
+        assertEquals(5, bobsProjects.size());
+
+        // Find all Bob's todo tasks
+        List<OlzAction> bobsTasks = OlzAction.findActionInvolving("bob@example.com");
+        assertEquals(4, bobsTasks.size());
+    }*/
 }

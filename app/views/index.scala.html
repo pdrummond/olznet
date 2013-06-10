@@ -1,7 +1,29 @@
-@(message: String)
+@(olzLists: List[OlzList], olzActions: List[OlzAction])
 
-@main("Welcome to Play 2.1") {
-    
-    @play20.welcome(message, style = "Java")
-    
+@main(olzLists) {
+
+    <header>
+        <hgroup>
+            <h1>Dashboard</h1>
+            <h2>Tasks over all projects</h2>
+        </hgroup>
+    </header>
+
+    <article  class="tasks">
+        @olzActions.groupBy(_.olzList).map {
+            case (olzList, actions) => {
+                <div class="folder" data-folder-id="@olzList.id">
+                    <header>
+                        <h3>@olzList.name</h3>
+                    </header>
+                    <ul class="list">
+                        @actions.map { action =>
+                            @views.html.actions.item(action)
+                        }
+                    </ul>
+                </div>
+            }
+        }
+    </article>
+
 }
